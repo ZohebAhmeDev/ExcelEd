@@ -3,6 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
     <title>ExcelEd - Personalized Tuition Classes</title>
     <link
       rel="stylesheet"
@@ -19,6 +23,51 @@
         --accent: #4cc9f0;
         --light: #f8f9fa;
         --dark: #212529;
+      }
+
+      /* Add this to your existing CSS */
+      html,
+      body {
+        max-width: 100%;
+        overflow-x: hidden;
+      }
+
+      .container {
+        width: 100%;
+        padding: 0 15px;
+      }
+
+      /* Ensure all images don't exceed container width */
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+
+      /* Add these media queries for specific fixes */
+      @media (max-width: 767px) {
+        /* Prevent any element from causing overflow */
+        .hero-content,
+        .hero-image,
+        .features,
+        .subjects-list,
+        .contact-info,
+        .testimonial-slider {
+          width: 100%;
+          padding-left: 0;
+          padding-right: 0;
+          margin-left: 0;
+          margin-right: 0;
+        }
+
+        /* Specifically fix the testimonial section */
+        .testimonial-content {
+          padding: 0 10px;
+        }
+
+        /* Fix for the bubbles animation */
+        .bubble {
+          display: none; /* Disable on mobile if they're causing issues */
+        }
       }
 
       * {
@@ -839,6 +888,29 @@
         </p>
       </div>
     </footer>
+    <script>
+      // Debugging tool to find overflowing elements
+      document.addEventListener("DOMContentLoaded", function () {
+        function checkOverflow() {
+          const all = document.getElementsByTagName("*");
+          let maxWidth = document.documentElement.clientWidth;
+
+          for (let i = 0; i < all.length; i++) {
+            const el = all[i];
+            const rect = el.getBoundingClientRect();
+
+            if (rect.right > maxWidth || rect.left < 0) {
+              console.log("Overflowing element:", el);
+              el.style.outline = "2px solid red"; // Highlight in red
+            }
+          }
+        }
+
+        // Run initially and on resize
+        checkOverflow();
+        window.addEventListener("resize", checkOverflow);
+      });
+    </script>
 
     <script>
       // Create bubbles for header animation
